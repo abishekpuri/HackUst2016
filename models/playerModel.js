@@ -13,6 +13,6 @@ module.exports = {
               'WHERE NOT EXISTS(SELECT 1 FROM nickname_exists) ' +
               'RETURNING player_id) ' +
               'SELECT player_id FROM nickname_exists UNION ' +
-              'SELECT player_id FROM nickname_insert',data.body)
+              'SELECT player_id FROM nickname_insert',data.body);
   }
-}
+};
