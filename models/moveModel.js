@@ -10,10 +10,21 @@ module.exports =
     return db.one('INSERT INTO move_info (game_id, player_id, word) '+
     'VALUES (${game_id}, ${player_id}, ${word})',data.body)
     .then(function(data) {
-      return db.any('SELECT player_id FROM participants_info ' +
-      'WHERE game_id=${game_id} AND position < (' +
+      return db.one('SELECT player_id FROM participants_info ' +
+      'WHERE game_id=${game_id} AND position > (' +
       'SELECT position FROM participants_info WHERE player_id=${player_id})' +
-      'LIMIT 1',data.body);
+      'ASC LIMIT 1',data.body).then(function(data) {
+        if(data == null) {
+          return db.one('SELECT player_id FROM participants_info ' +
+          'WHERE game_id=${game_id} ORDER BY position ASC LIMIT 1',data.body);
+        }
+        else {
+          return db.one('SELECT player_id FROM participants_info ' +
+          'WHERE game_id=${game_id} AND position > (' +
+          'SELECT position FROM participants_info WHERE player_id=${player_id})' +
+          'ASC LIMIT 1',data.body);
+        }
+      })
     });
   }
 };

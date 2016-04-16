@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 var gameModel = require('./models/gameModel.js');
 var playerModel = require('./models/playerModel.js');
 var participantsModel = require('./models/participantsModel.js');
+var moveModel = require('./models/moveModel.js');
 
 app.set("port", (process.env.PORT || DEFAULT_FALLBACK_PORT));
 app.set("views", __dirname + "/views");
@@ -69,6 +70,39 @@ app.post('/join_game', function(req,res) {
   });
 });
 
+//When a game is started, this route is called, it will take the game id and
+//will return the first player whose turn it is
+
+app.post('/start_game', function (req, res) {
+  console.log('start_game route entered');
+  gameModel.startGame(req).then(function(data) {
+    res.send(data);
+  },function(error) {
+    console.log('',error);
+  });
+})
+
+//When a move is made, this route is called, it will take the word,game_id
+//and the player_id, returning the player_id of whoever is next and the last word
+
+app.post('/add_word', function (req, res) {
+  console.log('add_word route entered');
+  moveModel.addWord(req).then(function(data) {
+    data.word = req.body.word;
+    res.send(data);
+  })
+})
+//When a game is finished, this route is called, it will take the game id and
+//return nothing
+
+app.post('/end_game', function (req, res) {
+  console.log('end_game route entered');
+  gameModel.endGame(req).then(function() {
+    res.send('ENDED');
+  },function(error) {
+    console.log(error);
+  });
+})
 //When a player waiting in a lobby requests to know when a player has arrived,
 //this route is called, it will take the player_id and (eventually) return the
 //updated list of all players in the game
