@@ -15,17 +15,27 @@ module.exports = {
       'WHERE game_id=${game_id}', data.body);
    });
  },
- getIdsByGame: function(data) {
-   console.log('getIdsByName model function entered');
-   return db.any('SELECT player_id FROM participants_info ' +
-   'WHERE game_id=${game_id}',{'game_id': data}).then(function(ids) {
+ nextPlayerRequests: nextPlayerRequests,
+ getNicknamesByGame: function(data) {
+   console.log('getNicknamesByName model function entered');
+   return db.any('SELECT nickname,player_id FROM participants_info ' +
+   'NATURAL JOIN player_info WHERE participants_info.game_id=${game_id}',
+   {'game_id': data}).then(function(ids) {
+     var nicknames = [];
+     for(var i in ids) {
+       nicknames.push(ids[i].nickname);
+     }
+     console.log('Nicknames : ',nicknames);
      console.log('ids in game right now: ',ids);
-     for(i in ids) {
-       var requestObject = nextPlayerRequests.get(i.player_id);
-       if(requestObject != undefined) {
-         requestObject.handler(ids);
+     for(var j in ids) {
+       var requestObject = nextPlayerRequests.get(ids[j].player_id);
+       if(requestObject !== undefined) {
+         console.log('request Object:',requestObject);
+         requestObject.handler(nicknames);
        }
      }
-   })
+   },function(error) {
+     console.log(error);
+   });
  }
 };

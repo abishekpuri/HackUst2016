@@ -22,19 +22,6 @@ app.get("/", function(req, res) {
   res.render("pages/index", { "sess": sess });
 });
 
-//When a game is created, this route is called, it will take all the data about
-//the game, including : topic,mode,host,time_limit and/or word_limit,
-//player_limit,password,turn_limit. It will return the game_id
-
-app.post('/create_game', function (req,res) {
-  console.log('create_game route entered');
-  gameModel.createGame(req).then(function(data){
-    res.send(data);
-  },function(error) {
-    console.log('',error);
-  });
-});
-
 //When a player is created, this route is called, it will take the nickname of
 //the player and return the player_id
 
@@ -47,6 +34,46 @@ app.post('/create_player', function(req,res) {
   });
 });
 
+//Below is the test for player creation
+
+playerModel.createPlayer({'body': {
+  'nickname': 'Hauton'
+}}).then(function(data){console.log('CreatePlayer Test Result:',data)});
+playerModel.createPlayer({'body': {
+  'nickname': 'Abishek'
+}}).then(function(data){console.log('CreatePlayer Test Result:',data)});
+playerModel.createPlayer({'body': {
+  'nickname': 'Sandy'
+}}).then(function(data){console.log('CreatePlayer Test Result:',data)});
+
+//When a game is created, this route is called, it will take all the data about
+//the game, including : topic,mode,host,time_limit and/or word_limit,
+//player_limit,password,turn_limit. It will return the game_id
+
+app.post('/create_game', function (req,res) {
+  console.log('create_game route entered');
+  gameModel.createGame(req).then(function(data){
+    res.send(data);
+  },function(error) {
+    console.log('',error);
+  });
+});
+//Below is the test for game creation
+
+gameModel.createGame({'body': {
+  'topic': 'a',
+  'mode': 'a',
+  'host': 1,
+  'time_limit': 5,
+  'word_limit': 5,
+  'player_limit': 5,
+  'turn_limit': 5,
+  'password': null
+}}).then(function(result){
+  console.log('createGame Test Result:',result);
+})
+
+
 //When a player joins a game, this route is called, it will take the game and
 //player id, and returns all the players currently waiting in the game
 
@@ -58,14 +85,28 @@ app.post('/join_game', function(req,res) {
     console.log('',error);
   });
 });
+/*
+participantsModel.joinGame({'body': {
+  'player_id': 2,
+  'game_id': 1
+}});
 
+participantsModel.nextPlayerRequests.set(2,{handler: function(data){
+  console.log('Player Request'+ data);
+}});
+
+participantsModel.joinGame({'body': {
+  'player_id': 3,
+  'game_id': 1
+}})
+*/
 //When a player waiting in a lobby requests to know when a player has arrived,
 //this route is called, it will take the player_id and (eventually) return the
 //updated list of all players in the game
 
 app.post('/request_next_player', function(req,res) {
   console.log('request_next_player route entered');
-  nextPlayerRequests.set(req.body.player_id,{
+  participantsModel.nextPlayerRequests.set(req.body.player_id,{
     handler: function(data) {
       res.send(data);
     }
@@ -96,7 +137,7 @@ pg.connect(process.env.DATABASE_URL, function(error, client) {
 
 function handleGameWaitingNotif(payload){
   console.log("handleGameWaitingNotif function called");
-  participantsModel.getIdsByGame(payload);
+  participantsModel.getNicknamesByGame(payload);
 }
 app.listen(app.get("port"), function() {
   console.log("Node app is running on port", app.get("port"));
