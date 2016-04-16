@@ -4,4 +4,4 @@ create table game_info(game_id serial primary key,topic text not null,mode text 
 
 create table move_info(move_id serial primary key,game_id integer references game_info(game_id),player_id integer references player_info(player_id),word text not null);
 
-create table participants_info(game_id integer references game_info(game_id),player_id integer references player_info(player_id),primary key (game_id,player_id));
+create table participants_info(game_id integer references game_info(game_id),player_id integer references player_info(player_id),primary key (game_id,player_id));  the
