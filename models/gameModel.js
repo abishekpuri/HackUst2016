@@ -15,7 +15,7 @@ module.exports = {
               return db.one('INSERT INTO participants_info(' +
               'game_id, player_id) VALUES(${game_id},${player_id}) ' +
               'RETURNING game_id',
-              {'game_id':data2,'player_id':data.body.player_id});
+              {'game_id':data2.game_id,'player_id':data.body.player_id});
             });
   }
 };
