@@ -5,9 +5,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+var pg = require("pg");
 
-// extended = true to support nested JSON objects in requests
-// this is utilized extensively for package requests
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
