@@ -6,10 +6,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 var gameModel = require('./models/gameModel.js');
 var playerModel = require('./models/playerModel.js');
+
 app.set("port", (process.env.PORT || DEFAULT_FALLBACK_PORT));
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
