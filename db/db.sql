@@ -1,7 +1,14 @@
-drop table player_info cascade;
-drop table game_info cascade;
-drop table move_info cascade;
-drop table participants_info cascade;
+drop table if exists player_info cascade;
+drop table if exists game_info cascade;
+drop table if exists move_info cascade;
+drop table if exists participants_info cascade;
+drop type if exists status cascade;
+
+create type status as enum (
+  'waiting',
+  'started',
+  'ended'
+);
 
 create table player_info (
   player_id serial primary key,
@@ -17,7 +24,9 @@ create table game_info (
   host integer references player_info(player_id),
   time_limit integer,
   word_limit integer,
+  player_limit integer not null check (player_limit > 0),
   password text,
+  current_status status,
   constraint termination_condition
     check (time_limit is not null or word_limit is not null)
 );
