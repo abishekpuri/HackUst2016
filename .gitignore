@@ -31,3 +31,20 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+.env
+.env.save
+*.gypi
+
+.DS_Store
+docs/
+tags
+*~
+*.stackdump
+
+public/build
+pg_upgrade*
+copy_table.sh
+backup_data.sql
+server.*
+.flowconfig
