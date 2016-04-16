@@ -5,7 +5,8 @@ var db = pgp(process.env.DATABASE_URL);
 
 module.exports =
 {
-  addWord: function(data,callback) {
+  addWord: function(data) {
+    console.log('add Word Function');
     return db.one('INSERT INTO move_info (game_id, player_id, word) '+
     'VALUES (${game_id}, ${player_id}, ${word})',data.body)
     .then(function(data) {

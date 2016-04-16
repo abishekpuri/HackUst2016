@@ -3,6 +3,7 @@ drop table if exists game_info cascade;
 drop table if exists move_info cascade;
 drop table if exists participants_info cascade;
 drop type if exists status cascade;
+drop function player_joined_trigger();
 
 create type status as enum (
   'waiting',
@@ -44,3 +45,14 @@ create table participants_info (
   game_id integer references game_info(game_id),
   player_id integer references player_info(player_id)
 );
+
+create function player_joined_trigger() returns trigger as $$
+  begin
+    perform pg_notify('game_waiting',new.game_id::text);
+    return new;
+  end;
+$$ language plpgsql;
+
+create trigger player_joined_trigger
+  after insert on participants_info
+    for each row execute procedure player_joined_trigger();
