@@ -71,13 +71,19 @@ app.post('/join_game', function(req,res) {
     console.log('',error);
   });
 });
+// req.body = player id that wants game status
+app.post('/get_game_status', function (req, res) {
+  gameModel.getGameStatus(req).then(function(result) {
+    res.send(result);
+  });
+})
 
 //When a game is started, this route is called, it will take the game id and
 //will return the first player whose turn it is
 
 app.post('/start_game', function (req, res) {
   console.log('start_game route entered');
-  gameModel.startGame(req).then(function(data) {
+  gameModel.startGame({req}).then(function(data) {
     res.send(data);
   },function(error) {
     console.log('',error);

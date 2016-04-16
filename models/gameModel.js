@@ -22,6 +22,10 @@ module.exports = {
     console.log('getAllGames model function');
     return db.any('SELECT * FROM game_info WHERE current_status=\'waiting\'');
   },
+  getGameStatus: function(data) {
+    return db.one('SELECT current_status FROM game_info ' +
+    'WHERE game_id=${game_id}',data.body);
+  }
   startGame: function(data) {
     console.log('startGame model function');
     return db.none('UPDATE game_info SET current_status=\'started\' ' +
