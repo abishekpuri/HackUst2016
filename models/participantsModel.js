@@ -15,8 +15,8 @@ module.exports = {
      return db.none('UPDATE game_info SET current_players = ' +
      'current_players + 1 WHERE game_id=${game_id}',data.body)
      .then(function() {
-       return db.any('SELECT player_id FROM participants_info ' +
-       'WHERE game_id=${game_id}',data.body);
+       return db.any('SELECT nickname,player_id FROM participants_info ' +
+       'NATURAL JOIN player_info WHERE participants_info.game_id=${game_id}',data.body);
      })
    });
  },
