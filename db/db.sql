@@ -40,7 +40,7 @@ create table move_info (
 );
 
 create table participants_info (
+  position serial primary key,
   game_id integer references game_info(game_id),
-  player_id integer references player_info(player_id),
-  primary key (game_id, player_id)
+  player_id integer references player_info(player_id)
 );

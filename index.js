@@ -20,19 +20,24 @@ app.get("/", function(req, res) {
 });
 
 //When a game is created, this route is called, it will take all the data about
-// the game, including : topic,mode,host,time_limit and/or word_limit,
+//the game, including : topic,mode,host,time_limit and/or word_limit,
 //player_limit,password,turn_limit. It will return the game_id
+
 app.post('/createGame', function (req,res) {
   gameModel.createGame(req).then(function(data){
     res.send(data);
   });
 });
 
+//When a player is created, this route is called, it will take the nickname of
+//the player and return the player_id
+
 app.post('/createPlayer', function(req,res) {
   playerModel.createPlayer(req).then(function(data){
-    res.send(data)
+    res.send(data);
   });
 });
+
 
 app.listen(app.get("port"), function() {
   console.log("Node app is running on port", app.get("port"));
