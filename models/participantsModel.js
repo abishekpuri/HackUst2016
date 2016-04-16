@@ -17,7 +17,7 @@ module.exports = {
      .then(function() {
        return db.any('SELECT nickname,player_id FROM participants_info ' +
        'NATURAL JOIN player_info WHERE participants_info.game_id=${game_id}',data.body);
-     })
+     });
    });
  },
  nextPlayerRequests: nextPlayerRequests,

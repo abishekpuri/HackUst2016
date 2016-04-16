@@ -90,6 +90,20 @@ app.post('/start_game', function (req, res) {
   });
 })
 
+//This is a poll for the last word, takes in the game id and returns the word
+//and whose turn it is
+
+app.post('/get_word', function (req, res) {
+  console.log('getting word route entered');
+  moveModel.getLatestWord(req).then(function(data) {
+    console.log('latest word data :',data);
+    moveModel.getNextPlayer(data).then(function(data2) {
+      data2.word = data.word;
+      console.log('latest word data 2 : ',data2);
+      res.send(data2);
+    })
+  });
+})
 //When a move is made, this route is called, it will take the word,game_id
 //and the player_id, returning the player_id of whoever is next and the last word
 
