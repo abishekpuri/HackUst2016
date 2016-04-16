@@ -26,10 +26,10 @@ module.exports = {
     return db.one('SELECT current_status FROM game_info ' +
     'WHERE game_id=${game_id}',data.body);
   },
-  startGame: function() {
-    console.log('startGame model function' + JSON.stringify(data.body));
+  startGame: function(data) {
+    console.log('startGame model function ' + JSON.stringify(data.body.game_id));
     return db.none('UPDATE game_info SET current_status=\'started\' ' +
-    'WHERE game_id=${game_id}',data.body).then(function(data) {
+    'WHERE game_id=${game_id}',data.body).then(function() {
       return db.one('SELECT player_id FROM participants_info ' +
       'WHERE game_id=${game_id} ORDER BY position ASC LIMIT 1',data.body);
     });
