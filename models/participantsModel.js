@@ -11,11 +11,13 @@ module.exports = {
     return db.none('INSERT INTO participants_info(game_id,player_id) ' +
     'SELECT ${game_id}, ${player_id} WHERE EXISTS(SELECT 1 FROM game_info ' +
     'WHERE game_id=${game_id} AND current_players < player_limit)',data.body)
-    .then(function(data2){
-     return db.any('UPDATE game_info SET current_players = ' +
-     'current_players + 1 WHERE game_id=${game_id} RETURNING ' +
-     '(SELECT player_id FROM participants_info ' +
-     'WHERE game_id=${game_id} AND current_players < player_limit)',data.body)
+    .then(function(){
+     return db.none('UPDATE game_info SET current_players = ' +
+     'current_players + 1 WHERE game_id=${game_id}',data.body)
+     .then(function() {
+       return db.any('SELECT player_id FROM participants_info ' +
+       'WHERE game_id=${game_id}',data.body);
+     })
    });
  },
  nextPlayerRequests: nextPlayerRequests,

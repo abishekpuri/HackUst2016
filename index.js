@@ -64,6 +64,7 @@ app.post('/get_all_games', function (req, res) {
 app.post('/join_game', function(req,res) {
   console.log('join_game route entered');
   participantsModel.joinGame(req).then(function(data) {
+    console.log("COMPLETED JOOINING GAME");
     res.send(data);
   },function(error) {
     console.log('',error);
