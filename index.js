@@ -54,6 +54,7 @@ app.post('/create_game', function (req,res) {
 app.post('/get_all_games', function (req, res) {
   console.log('get_all_games route entered');
   gameModel.getAllGames().then(function(data) {
+    console.log('get all games : ',data);
     res.send(data);
   });
 });
