@@ -5,6 +5,7 @@ var db = pgp(process.env.DATABASE_URL);
 
 module.exports = {
   createPlayer: function(data,callback) {
+    console.log('create Player model function');
     return db.one('WITH nickname_exists AS (' +
               'SELECT nickname,player_id FROM player_info ' +
               'WHERE nickname=${nickname}),' +

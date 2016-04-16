@@ -34,6 +34,7 @@ app.post('/create_game', function (req,res) {
 
 app.post('/create_player', function(req,res) {
   playerModel.createPlayer(req).then(function(data){
+    console.log('',data);
     res.send(data);
   });
 });
