@@ -17,6 +17,8 @@ create table game_info (
   host integer references player_info(player_id),
   time_limit integer,
   word_limit integer,
+  player_limit integer,
+  turn_limit integer,
   password text,
   constraint termination_condition
     check (time_limit is not null or word_limit is not null)
