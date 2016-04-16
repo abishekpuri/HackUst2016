@@ -6,7 +6,7 @@ var db = pgp(process.env.DATABASE_URL);
 module.exports = {
   createGame : function(data) {
     console.log('create game function');
-    return db.none('INSERT INTO game_info (topic, mode, host, time_limit,' +
+    return db.one('INSERT INTO game_info (topic, mode, host, time_limit,' +
             'word_limit, player_limit, turn_limit, password,current_status) ' +
             ' VALUES (${topic}, ${mode}, ${host}, ${time_limit}, ' +
             '${word_limit}, ${player_limit}, ${turn_limit}, ' +
