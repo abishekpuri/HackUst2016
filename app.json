@@ -1,0 +1,7 @@
+{
+  "name": "Word story",
+  "description": "Build your own fantasy.",
+  "repository": "https://github.com/heroku/airztudio",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"]
+}
