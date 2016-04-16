@@ -10,9 +10,11 @@ module.exports = {
     console.log('joinGame model function entered');
     return db.none('INSERT INTO participants_info(game_id,player_id) ' +
     'VALUES(${game_id},${player_id})',data.body)
-    .then(function(data2) {
-      return db.any('SELECT player_id FROM participants_info ' +
-      'WHERE game_id=${game_id}', data.body);
+    .then(function(data2){
+     return db.any('UPDATE game_info SET current_players = ' +
+     'current_players + 1 WHERE game_id=${game_id} RETURNING ' +
+     '(SELECT player_id FROM participants_info ' +
+     'WHERE game_id=${game_id})',data.body)
    });
  },
  nextPlayerRequests: nextPlayerRequests,

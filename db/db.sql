@@ -26,6 +26,7 @@ create table game_info (
   time_limit integer,
   word_limit integer,
   player_limit integer not null check (player_limit > 0),
+  current_players integer,
   turn_limit integer,
   password text,
   current_status status,

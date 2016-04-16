@@ -47,6 +47,16 @@ app.post('/create_game', function (req,res) {
   });
 });
 
+//To get all the games, this route is called, doesn't need any information,
+//Returns all information about all games that are in waiting state
+
+app.post('/get_all_games', function (req, res) {
+  console.log('get_all_games route entered');
+  gameModel.getAllGames().then(function(data) {
+    res.send(data);
+  });
+});
+
 //When a player joins a game, this route is called, it will take the game and
 //player id, and returns all the players currently waiting in the game
 
