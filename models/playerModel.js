@@ -11,7 +11,7 @@ module.exports = {
               'SELECT nickname,player_id FROM player_info ' +
               'WHERE nickname=${nickname}),' +
               'nickname_insert AS (INSERT INTO player_info(nickname) ' +
-              'VALUES(${nickname} RETURNING player_id) ' +
+              'VALUES(${nickname}) RETURNING player_id) ' +
               'WHERE NOT EXISTS(SELECT 1 FROM nickname_exists) ' +
               'RETURNING player_id) ' +
               'SELECT player_id FROM nickname_exists UNION ' +
