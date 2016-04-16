@@ -1,7 +1,7 @@
 {
-  "name": "Word story",
+  "name": "WordStory",
   "description": "Build your own fantasy.",
-  "repository": "https://github.com/heroku/airztudio",
+  "repository": "https://github.com/abishekpuri/HackUst2016s",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static"]
 }
