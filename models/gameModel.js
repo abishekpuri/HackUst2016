@@ -26,25 +26,17 @@ module.exports = {
     return db.one('SELECT current_status FROM game_info ' +
     'WHERE game_id=${game_id}',data.body);
   },
-  startGame: startGame,
+  startGame: function() {
+    console.log('startGame model function' + JSON.stringify(data.body));
+    return db.none('UPDATE game_info SET current_status=\'started\' ' +
+    'WHERE game_id=${game_id}',data.body).then(function(data) {
+      return db.one('SELECT player_id FROM participants_info ' +
+      'WHERE game_id=${game_id} ORDER BY position ASC LIMIT 1',data.body);
+    });
+  },
   endGame: function(data) {
     console.log('endGame model function');
     return db.none('UPDATE game_info SET current_status=\'ended\' ' +
     'WHERE game_id=${game_id}',data.body);
   }
 };
-
-function startGame (data) {
-  console.log('startGame model function' + JSON.stringify(data.body));
-  return db.none('UPDATE game_info SET current_status=\'started\' ' +
-  'WHERE game_id=${game_id}',data.body).then(function(data) {
-    return db.one('SELECT player_id FROM participants_info ' +
-    'WHERE game_id=${game_id} ORDER BY position ASC LIMIT 1',data.body);
-  });
-}
-
-startGame ({body: {
-  game_id: 7}
-}).then(function() {
-  console.log("SUCCESS");
-});
