@@ -23,7 +23,7 @@ app.get("/", function(req, res) {
 //the game, including : topic,mode,host,time_limit and/or word_limit,
 //player_limit,password,turn_limit. It will return the game_id
 
-app.post('/createGame', function (req,res) {
+app.post('/create_game', function (req,res) {
   gameModel.createGame(req).then(function(data){
     res.send(data);
   });
@@ -32,7 +32,7 @@ app.post('/createGame', function (req,res) {
 //When a player is created, this route is called, it will take the nickname of
 //the player and return the player_id
 
-app.post('/createPlayer', function(req,res) {
+app.post('/create_player', function(req,res) {
   playerModel.createPlayer(req).then(function(data){
     res.send(data);
   });
