@@ -36,6 +36,8 @@ app.post('/create_player', function(req,res) {
   playerModel.createPlayer(req).then(function(data){
     console.log('',data);
     res.send(data);
+  },function(error) {
+    console.log('Error in create_player :' + error);
   });
 });
 
