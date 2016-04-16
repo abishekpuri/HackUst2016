@@ -31,7 +31,7 @@ FROM nickname_exists UNION SELECT player_id FROM nickname_insert;
 
 INSERT INTO game_info (topic, mode, host, time_limit,
         word_limit, player_limit, turn_limit, password,current_status) VALUES ('Sports',
-        'normal', 1 , 100, 100, 3,
+        'normal', 1 , 100, 100, 2,
         10,NULL,'waiting') RETURNING game_id;
 
 /* Join a game */
