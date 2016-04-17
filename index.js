@@ -84,7 +84,9 @@ app.post('/get_game_status', function (req, res) {
 app.post('/start_game', function (req, res) {
   console.log('start_game route entered');
   gameModel.startGame(req).then(function(data) {
-    res.send(data);
+    participantsModel.getNicknamesByGame(req.body.game_id).then(function(data){
+          res.send(data);
+    });
   },function(error) {
     console.log('',error);
   });
