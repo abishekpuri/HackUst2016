@@ -7,7 +7,7 @@ module.exports =
 {
   addWord: function(data) {
     console.log('add Word Function');
-    return db.one('INSERT INTO move_info (game_id, player_id, word) '+
+    return db.none('INSERT INTO move_info (game_id, player_id, word) '+
     'VALUES (${game_id}, ${player_id}, ${word})',data.body);
   },
   getLatestWord: function(data) {
