@@ -97,6 +97,7 @@ app.post('/get_word', function (req, res) {
   console.log('getting word route entered');
   moveModel.getLatestWord(req).then(function(data) {
     console.log('latest word data :',data);
+    data.game_id = req.body.game_id;
     moveModel.getNextPlayer(data).then(function(data2) {
       data2.word = data.word;
       console.log('latest word data 2 : ',data2);
