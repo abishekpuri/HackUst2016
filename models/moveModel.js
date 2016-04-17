@@ -7,8 +7,8 @@ module.exports =
 {
   addWord: function(data) {
     console.log('add Word Function');
-    return db.none('INSERT INTO move_info (game_id, player_id, word) '+
-    'VALUES (${game_id}, ${player_id}, ${word})',data.body);
+    return db.one('INSERT INTO move_info (game_id, player_id, word) '+
+    'VALUES (${game_id}, ${player_id}, ${word}) RETURNING game_id',data.body);
   },
   getLatestWord: function(data) {
     console.log('getWord Function');
@@ -20,7 +20,7 @@ module.exports =
     return db.any('SELECT player_id FROM participants_info WHERE game_id=${game_id} ' +
     'AND position > (SELECT position FROM participants_info WHERE player_id=${player_id}) ' +
     'ORDER BY position ASC LIMIT 1',data).then(function(data2) {
-      if(data2==[]) {
+      if(data2.player_id === 'undefined') {
         return db.one('SELECT player_id FROM participants_info WHERE game_id=${game_id} '+
         'ORDER BY position ASC LIMIT 1',data);
       }
