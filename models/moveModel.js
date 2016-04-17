@@ -13,7 +13,7 @@ module.exports =
   getLatestWord: function(data) {
     console.log('getWord Function');
     return db.one('SELECT word,player_id FROM move_info WHERE game_id=${game_id} ' +
-    'ORDER BY move_id DESC LIMIT 1',data.body);
+    'ORDER BY move_id DESC LIMIT 1',data.body)
   },
   getNextPlayer: function(data) {
     console.log('getNextPlayer function');

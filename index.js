@@ -110,8 +110,7 @@ app.post('/get_word', function (req, res) {
 app.post('/add_word', function (req, res) {
   console.log('add_word route entered');
   moveModel.addWord(req).then(function(data) {
-    data.word = req.body.word;
-    res.send(data);
+    res.send('HELOO');
   })
 })
 //When a game is finished, this route is called, it will take the game id and
