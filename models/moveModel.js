@@ -25,6 +25,8 @@ module.exports =
         'ORDER BY position ASC LIMIT 1',data);
       }
       else {
+        console.log('data2 was',data2);
+        console.log('data2 player id was',data2.player_id);
         return db.one('SELECT player_id FROM participants_info WHERE game_id=${game_id} ' +
         'AND position > (SELECT position FROM participants_info WHERE player_id=${player_id}) ' +
         'ORDER BY position ASC LIMIT 1',data);
