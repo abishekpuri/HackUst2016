@@ -10,7 +10,7 @@ module.exports =
     return db.one('INSERT INTO move_info (game_id, player_id, word) '+
     'VALUES (${game_id}, ${player_id}, ${word}) RETURNING game_id',data.body).catch(function(error) {
       console.log(' ADD WORD '+error);
-    };
+    });
   },
   getLatestWord: function(data) {
     console.log('getWord Function');
