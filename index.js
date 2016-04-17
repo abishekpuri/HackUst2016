@@ -101,6 +101,8 @@ app.post('/get_word', function (req, res) {
       data2.word = data.word;
       console.log('latest word data 2 : ',data2);
       res.send(data2);
+    },function(error) {
+      console.log(error);
     })
   });
 })
